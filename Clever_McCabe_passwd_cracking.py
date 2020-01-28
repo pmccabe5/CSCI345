@@ -4,16 +4,11 @@
 import hashlib
 from threading import *
 from termcolor import colored
-plaintext1 = []
-sha256Hash1 = []
-plaintext2 = []
-sha256Hash2 = []
-plaintext3 = []
-sha256Hash3 = []
-plaintext4 = []
-sha256Hash4 = []
-plaintext5 = []
-sha256Hash5 = []
+ruleFiveDictionary = {}
+ruleOneDictionary = {}
+ruleTwoDictionary = {}
+ruleThreeDictionary = {}
+ruleFourDictionary = {}
 wordlist = open('/usr/share/dict/words', 'r')
 #passwordDump = open('passwordDump.txt', 'r')
 #outfile = open('cracked-passwords-Clever-McCabe.txt', 'w')
@@ -96,7 +91,7 @@ ruleFour compares the hashes where the word could be contained in
 stored as plaintext:sha256
 '''
 
-def ruleFive(encrypt):
+def ruleFivePass(encrypt):
     hashfile5 = open('ruleFivePasswords.txt', 'r')
     for line in hashfile5:
         line = line.strip('\n')
@@ -139,31 +134,36 @@ def threaded(passwd):
     global passwordsCracked 
     passwordsCracked =  passwordsCracked + 1
 
-def ruleOneAndFivePasswords():
+
+def ruleOneAndThreeAndFivePasswords():
     for line in wordlist:
         fulltext = line.strip('\n')
-        line = line.strip('\n')
-        print('fulltext: ' + fulltext)
         rule5Sha256 = hashlib.sha256()
         rule5Sha256.update(line.encode())
         rule5Sha256 = rule5Sha256.hexdigest()
-        plaintext5.append(fulltext) 
-        sha256Hash5.append(fulltext)
-                
-        if len(fulltext) == 7:
+        ruleFiveDictionary[rule5Sha256] = fulltext     
+        if len(line) == 7:
             line = line.capitalize()
             line = line.strip('\n')
             for count in range(10):
                 temp = line.strip('\n')
                 temp = temp + str(count)
-                print('temp: ' + temp)
                 sha256 = hashlib.sha256()
                 sha256.update(temp.encode())
                 sha256 = sha256.hexdigest()
-                plaintext1.append(temp)
-                sha256Hash1.append(sha256)
+                ruleOneDictionary[sha256] = temp
+        if len(fulltext) == 5:
+            fulltext = fulltext.replace('a', '@')
+            fulltext = fulltext.replace('l', '1')
+            rule3Sha256 = hashlib.sha256()
+            rule3Sha256.update(line.encode())
+            rule3Sha256 = rule3Sha256.hexdigest()
+            ruleThreeDictionary[rule3Sha256] = fulltext 
+            
 def main():
-    ruleOneAndFivePasswords()
+    ruleOneAndThreeAndFivePasswords()
+    print(ruleThreeDictionary)
+    
     #for i in range(len(plaintext)):
     #   print (plaintext[i])    
         
