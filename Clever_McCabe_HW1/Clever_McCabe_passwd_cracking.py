@@ -218,7 +218,7 @@ def ruleOneAndThreeAndFivePasswords():
             rule3Sha256.update(line.encode())
             rule3Sha256 = rule3Sha256.hexdigest()
             ruleThreeDictionary[rule3Sha256] = fulltext
-
+    print(colored('DONE: Rule One, Three and Five hash tables created', 'blue'))
     waitUntilDoneBuilding[3] = False
     
 '''
@@ -248,6 +248,7 @@ def ruleTwoAndRuleFourLength4():
                     rule4For4Sha256.update(number.encode())
                     rule4For4Sha256 = rule4For4Sha256.hexdigest()
                     ruleFourDictionary4[rule4For4Sha256] = number
+    print(colored('DONE: Rule Two hash table created', 'blue'))
     waitUntilDoneBuilding[4] = False
 
 '''
@@ -344,8 +345,7 @@ def ruleFourLength6andLength7Start0():
                             elif(number == '8000000'):
                                 print(colored("1,999,999 Left . . .", 'magenta'))
                             elif(number == '9000000'):
-                                print(colored("999,999 Left . . .\n", 'magenta'))
-
+                                print(colored("999,999 Left . . .", 'magenta'))
     waitUntilDoneBuilding[1] = False
 
 '''
