@@ -33,10 +33,12 @@ ruleFiveDictionary = {}
 
 # booleans to keep track of whether or not the hash tables are done generating
 waitUntilDoneBuilding = [True, True, True, True, True, True, True, True, 
-True, True, True, True, True, True]
+True, True, True, True, True, True, True]
 
 # symbols that are included in rule four
 symbols = ["*", "~", "!", "#"]
+
+passwordHashes = []
 
 # files needed for the operation of the program
 wordlist = open('/usr/share/dict/words', 'r')
@@ -533,9 +535,16 @@ def ruleFourLength7Start9():
                             rule4For7Sha256 = rule4For7Sha256.hexdigest()
                             ruleFourDictionary7_9[rule4For7Sha256] = number
     waitUntilDoneBuilding[13] = False
+
+def readInPasswords():
+    for line in passwordDump.readlines():
+       password = line.split(':')[1].strip('\n')
+       passwordHashes.append(password)
+    waitUntilDoneBuilding[14] = False
+    print(colored('DONE: All password hashes have been read into an array', 'blue'))
             
 def main():
-    print(colored('The program will begin by creating all the threads to build the hash table rule sets.\n', 'yellow'))
+    print(colored('The program will begin by creating all the threads to build the hash table rule sets.', 'yellow'))
 
     threadZero = Thread(target = ruleFourLength7Start1)
     threadZero.start()
@@ -579,19 +588,27 @@ def main():
     threadFive = Thread(target = ruleFourLength1to3)
     threadFive.start()
 
-    print(colored('DONE: All threads have been created\n', 'blue'))
+    threadFourteen = Thread(target = readInPasswords)
+    threadFourteen.start()
+
+    print(colored('DONE: All threads have been created', 'blue'))
 
     print(colored('Please wait. . . The program is currently generating the hash table rule sets.', 'yellow'))
-    print(colored('Periodic updates will be given along the way displaying the programs progress.\n', 'yellow'))
+    print(colored('Periodic updates will be given along the way displaying the programs progress.', 'yellow'))
     
     while(waitUntilDoneBuilding[0] == True or waitUntilDoneBuilding[1] == True or waitUntilDoneBuilding[2] == True 
           or waitUntilDoneBuilding[3] == True or waitUntilDoneBuilding[4] == True 
           or waitUntilDoneBuilding[5] == True or waitUntilDoneBuilding[6] == True or waitUntilDoneBuilding[7] == True 
           or waitUntilDoneBuilding[8] == True or waitUntilDoneBuilding[9] == True or waitUntilDoneBuilding[10] == True
-          or waitUntilDoneBuilding[11] == True or waitUntilDoneBuilding[12] == True or waitUntilDoneBuilding[13] == True):
+          or waitUntilDoneBuilding[11] == True or waitUntilDoneBuilding[12] == True or waitUntilDoneBuilding[13] == True
+          or waitUntilDoneBuilding[14] == True):
         spin = True
     
-    print(colored('DONE: All hash table rule sets have been created\n', 'blue'))
+    print(colored('DONE: All hash table rule sets have been created', 'blue'))
+
+    print(passwordHashes)
+
+    
     
     #for i in range(len(plaintext)):
     #   print (plaintext[i])    
