@@ -1,5 +1,6 @@
 # CSCI345
 ## Running the program
+**Use HW1-Solution2**
 1. Make sure Python3 is installed in your environment.
 2. Open a terminal and navigate to the folder containing `Clever_McCabe_HW1_passwd_cracking.py`
 3. Run the following commands in the terminal:
