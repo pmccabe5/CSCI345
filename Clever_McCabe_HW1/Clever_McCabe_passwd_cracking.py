@@ -47,126 +47,6 @@ passwordDump = open('passwordDump.txt', 'r')
 outfile = open('cracked-passwords-Clever-McCabe.txt', 'w')
 passwordsCracked = 0
 
-
-'''
-ruleOne implements the a rule for 7 char word + capitalized first letter at 
-position 0. The password file for this function is named ruleOnePasswords.txt, 
-with the formatting plaintext:sha256.
-'''
-
-def ruleOne(encrypt):
-    hashfile1 = open('ruleOnePasswords.txt', 'r')
-    for line in hashfile1:
-        line = line.strip('\n')
-        passwd = []
-        passwd = line.split(':')        
-        if passwd[1] == encrypt:
-            print(colored(encrypt + ':' + passwd[0], 'green'))
-            outfile.write(passwd[1] + ':' + passwd[0] + '\n')
-            return True
-
-'''
-ruleTwo takes into account th possibility of a password of legnth 5 with a
-special character at the beginning of the password. Special characters included
-in this list include [*, ~, !, #] followed by 4 digits. The passwords are 
-located in the directory in ruleTwoPasswords.txt, with the formatting 
-plaintext:sha256.
-'''
-
-def ruleTwo(encrypt):
-    hashfile2 = open('ruleTwoPasswords.txt', 'r')
-    for line in hashfile2:
-        line = line.strip('\n')
-        passwd = []
-        passwd = line.split(':')        
-        if passwd[1] == encrypt:
-            print(colored(encrypt + ':' + passwd[0], 'green'))
-            outfile.write(passwd[1] + ':' + passwd[0] + '\n')
-            return True
-
-'''
-ruleThree performs the password check on passwords that contain  either an 'a'
-or an 'l' and substituted for '@' and '1' respectively. The passwords are 
-located in ruleThreepasswords.txt, with the formatting plaintext:sha256.
-'''
-       
-def ruleThree(encrypt):
-    hashfile3 = open('ruleThreePasswords.txt', 'r')
-    for line in hashfile3:
-        line = line.strip('\n')
-        passwd = []
-        passwd = line.split(':')        
-        if passwd[1] == encrypt:
-            print(colored(encrypt + ':' + passwd[0], 'green'))
-            outfile.write(passwd[1] + ':' + passwd[0] + '\n')
-            return True
-
-'''
-ruleFour compares the hashes where they may be numeric (digits 0-9) up to 
-seven digits in length. The passwords are stored in ruleFourPasswords.txt,
-stored as plaintext:sha256
-'''
-
-def ruleFour(encrypt):
-    hashfile4 = open('ruleFourPasswords.txt', 'r')
-    for line in hashfile4:
-        line = line.strip('\n')
-        passwd = []
-        passwd = line.split(':')        
-        if passwd[1] == encrypt:
-            print(colored(encrypt + ':' + passwd[0], 'green'))
-            outfile.write(passwd[1] + ':' + passwd[0] + '\n')
-            return True
-
-'''
-ruleFour compares the hashes where the word could be contained in 
-/usr/share/dict/words. The passwords are stored in ruleFourPasswords.txt,
-stored as plaintext:sha256
-'''
-
-def ruleFivePass(encrypt):
-    hashfile5 = open('ruleFivePasswords.txt', 'r')
-    for line in hashfile5:
-        line = line.strip('\n')
-        passwd = []
-        passwd = line.split(':')        
-        if passwd[1] == encrypt:
-            print(colored(encrypt + ':' + passwd[0], 'green'))
-            outfile.write(passwd[1] + ':' + passwd[0] + '\n')
-            return True
-            
-'''
-threaded is used for threading the program to improve perfomance and sppeed of
-the password cracker
-'''
-    
-def threaded(passwd):
-    cracked = False
-    if cracked == False:
-        isCracked = ruleThree(passwd)
-        if isCracked:
-            cracked = True
-    if cracked == False:
-        isCracked = ruleTwo(passwd)
-        if isCracked:
-            cracked = True   
-    if cracked == False:
-        isCracked = ruleFivePass(passwd)
-        if isCracked:
-            cracked = True
-    if cracked == False:
-        isCracked = ruleOne(passwd)
-        if isCracked:
-            cracked = True
-    if cracked == False:
-        isCracked = ruleFour(passwd)
-        if isCracked:
-            cracked = True
-    if cracked == False:
-        print(colored('Password not found in the specified lists:' + passwd, 'red'))
-    global passwordsCracked 
-    passwordsCracked =  passwordsCracked + 1
-
 '''
 This method generates the hashed passords in the form of 
 a hash table, usng the dictionary data type for rules one, 
@@ -611,120 +491,139 @@ def main():
         hashFound = False
         if(hashFound == False):
             try:
-                print(ruleOneDictionary[hashedPassword])
+                print(colored(hashedPassword + ':' + ruleOneDictionary[hashedPassword], 'green'))
+                outfile.write(hashedPassword + ':' + ruleOneDictionary[hashedPassword] + '\n')
                 hashFound = True
             except:
                 hashFound = False
         if(hashFound == False):
             try:
-                print(ruleTwoDictionary[hashedPassword])
+                print(colored(hashedPassword + ':' + ruleTwoDictionary[hashedPassword], 'green'))
+                outfile.write(hashedPassword + ':' + ruleTwoDictionary[hashedPassword] + '\n')
                 hashFound = True
             except:
                 hashFound = False
         if(hashFound == False):
             try:
-                print(ruleThreeDictionary[hashedPassword])
+                print(colored(hashedPassword + ':' + ruleThreeDictionary[hashedPassword], 'green'))
+                outfile.write(hashedPassword + ':' + ruleThreeDictionary[hashedPassword] + '\n')
                 hashFound = True
             except:
                 hashFound = False
         if(hashFound == False):
             try:
-                print(ruleFourDictionary1to3[hashedPassword])
+                print(colored(hashedPassword + ':' + ruleFourDictionary1to3[hashedPassword]), 'green')
+                outfile.write(hashedPassword + ':' + ruleFourDictionary1to3[hashedPassword] + '\n')
                 hashFound = True
             except:
                 hashFound = False
         if(hashFound == False):
             try:
-                print(ruleFourDictionary1to3[hashedPassword])
+                print(colored(hashedPassword + ':' + ruleFourDictionary1to3[hashedPassword],'green'))
+                outfile.write(hashedPassword + ':' + ruleFourDictionary1to3[hashedPassword] + '\n')
                 hashFound = True
             except:
                 hashFound = False
         if(hashFound == False):
             try:
-                print(ruleFourDictionary4[hashedPassword])
+                print(colored(hashedPassword + ':' + ruleFourDictionary4[hashedPassword], 'green'))
+                outfile.write(hashedPassword + ':' + ruleFourDictionary4[hashedPassword] + '\n')
                 hashFound = True
             except:
                 hashFound = False
         if(hashFound == False):
             try:
-                print(ruleFourDictionary5[hashedPassword])
+                print(colored(hashedPassword + ':' + ruleFourDictionary5[hashedPassword], 'green'))
+                outfile.write(hashedPassword + ':' + ruleFourDictionary5[hashedPassword] + '\n')
                 hashFound = True
             except:
                 hashFound = False
         if(hashFound == False):
             try:
-                print(ruleFourDictionary6[hashedPassword])
+                print(colored(hashedPassword + ':' + ruleFourDictionary6[hashedPassword], 'green'))
+                outfile.write(hashedPassword + ':' + ruleFourDictionary6[hashedPassword] + '\n')
+                hashFound = True
+            except:
+                hashFound = False
+        if(hashFound == False):
+            try: 
+                print(colored(hashedPassword + ':' + ruleFourDictionary7_0[hashedPassword],'green'))
+                outfile.write(hashedPassword + ':' + ruleFourDictionary7_0[hashedPassword] + '\n')
                 hashFound = True
             except:
                 hashFound = False
         if(hashFound == False):
             try:
-                print(ruleFourDictionary7_0[hashedPassword])
+                print(colored(hashedPassword + ':' + ruleFourDictionary7_1[hashedPassword], 'green'))
+                outfile.write(hashedPassword + ':' + ruleFourDictionary7_1[hashedPassword] + '\n')
                 hashFound = True
             except:
                 hashFound = False
         if(hashFound == False):
             try:
-                print(ruleFourDictionary7_1[hashedPassword])
+                print(colored(hashedPassword + ':' + ruleFourDictionary7_2[hashedPassword], 'green'))
+                outfile.write(hashedPassword + ':' + ruleFourDictionary7_2[hashedPassword] + '\n')
                 hashFound = True
             except:
                 hashFound = False
         if(hashFound == False):
             try:
-                print(ruleFourDictionary7_2[hashedPassword])
+                print(colored(hashedPassword + ':' + ruleFourDictionary7_3[hashedPassword], 'green'))
+                outfile.write(hashedPassword + ':' + ruleFourDictionary7_3[hashedPassword] + '\n')
                 hashFound = True
             except:
                 hashFound = False
         if(hashFound == False):
             try:
-                print(ruleFourDictionary7_3[hashedPassword])
+                print(colored(hashedPassword + ':' + ruleFourDictionary7_4[hashedPassword], 'green'))
+                outfile.write(hashedPassword + ':' + ruleFourDictionary7_4[hashedPassword] + '\n')
                 hashFound = True
             except:
                 hashFound = False
         if(hashFound == False):
             try:
-                print(ruleFourDictionary7_4[hashedPassword])
+                print(colored(hashedPassword + ':' + ruleFourDictionary7_5[hashedPassword], 'green'))
+                outfile.write(hashedPassword + ':' + ruleFourDictionary7_5[hashedPassword] + '\n')
                 hashFound = True
             except:
                 hashFound = False
         if(hashFound == False):
             try:
-                print(ruleFourDictionary7_5[hashedPassword])
+                print(colored(hashedPassword + ':' + ruleFourDictionary7_6[hashedPassword], 'green'))
+                outfile.write(hashedPassword + ':' + ruleFourDictionary7_6[hashedPassword] + '\n')
                 hashFound = True
             except:
                 hashFound = False
         if(hashFound == False):
             try:
-                print(ruleFourDictionary7_6[hashedPassword])
+                print(colored(hashedPassword + ':' + ruleFourDictionary7_7[hashedPassword], 'green'))
+                outfile.write(hashedPassword + ':' + ruleFourDictionary7_7[hashedPassword] + '\n')
                 hashFound = True
             except:
                 hashFound = False
         if(hashFound == False):
             try:
-                print(ruleFourDictionary7_7[hashedPassword])
+                print(colored(hashedPassword + ':' + ruleFourDictionary7_8[hashedPassword], 'green'))
+                outfile.write(hashedPassword + ':' + ruleFourDictionary7_8[hashedPassword] + '\n')
                 hashFound = True
             except:
                 hashFound = False
         if(hashFound == False):
             try:
-                print(ruleFourDictionary7_8[hashedPassword])
+                print(colored(hashedPassword + ':' + ruleFourDictionary7_9[hashedPassword], 'green'))
+                outfile.write(hashedPassword + ':' + ruleFourDictionary7_9[hashedPassword] + '\n')
                 hashFound = True
             except:
                 hashFound = False
         if(hashFound == False):
             try:
-                print(ruleFourDictionary7_9[hashedPassword])
+                print(colored(hashedPassword + ':' + ruleFiveDictionary[hashedPassword], 'green'))
+                outfile.write(hashedPassword + ':' + ruleFiveDictionary[hashedPassword] + '\n')
                 hashFound = True
             except:
                 hashFound = False
         if(hashFound == False):
-            try:
-                print(ruleFiveDictionary[hashedPassword])
-                hashFound = True
-            except:
-                hashFound = False
-        if(hashFound == False):
-            print('Hash not found . . .' + hashedPassword)
+            print(colored('Hash not found . . . ' + hashedPassword, 'red'))
     
     #for i in range(len(plaintext)):
     #   print (plaintext[i])    
