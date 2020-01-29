@@ -148,7 +148,7 @@ def threaded(passwd):
         if isCracked:
             cracked = True   
     if cracked == False:
-        isCracked = ruleFive(passwd)
+        isCracked = ruleFivePass(passwd)
         if isCracked:
             cracked = True
     if cracked == False:
