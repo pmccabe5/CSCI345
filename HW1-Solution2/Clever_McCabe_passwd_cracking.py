@@ -302,7 +302,7 @@ def ruleFourLength7():
                                 rule4For7Sha256 = rule4For7Sha256.hexdigest()
                                 ruleFourDictionary7[rule4For7Sha256] = number
     waitUntilDoneBuilding[0] = False
-            
+    
 def main():
     
     # threadZero = Thread(target = ruleFourLength7)
