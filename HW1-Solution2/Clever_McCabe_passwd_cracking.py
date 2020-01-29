@@ -39,7 +39,7 @@ True, True, True, True, True, True]
 symbols = ["*", "~", "!", "#"]
 
 # files needed for the operation of the program
-wordlist = open('/usr/share/dict/words', 'r')
+wordlist = open('words.txt', 'r')
 passwordDump = open('passwordDump.txt', 'r')
 outfile = open('cracked-passwords-Clever-McCabe.txt', 'w')
 passwordsCracked = 0
@@ -591,6 +591,8 @@ def main():
           or waitUntilDoneBuilding[11] == True or waitUntilDoneBuilding[12] == True or waitUntilDoneBuilding[13] == True):
         spin = True
     print(colored('DONE: All hash table rule sets have been created\n', 'blue'))
+
+    print(len(ruleFiveDictionary))
 
     
     #for i in range(len(plaintext)):
