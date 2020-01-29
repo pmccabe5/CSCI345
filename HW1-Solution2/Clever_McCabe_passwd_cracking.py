@@ -591,9 +591,6 @@ def main():
           or waitUntilDoneBuilding[11] == True or waitUntilDoneBuilding[12] == True or waitUntilDoneBuilding[13] == True):
         spin = True
     print(colored('DONE: All hash table rule sets have been created\n', 'blue'))
-
-    print(len(ruleFiveDictionary))
-
     
     #for i in range(len(plaintext)):
     #   print (plaintext[i])    
