@@ -579,7 +579,7 @@ def main():
     threadFive = Thread(target = ruleFourLength1to3)
     threadFive.start()
 
-    print(colored('DONE: all threads have been created\n', 'blue'))
+    print(colored('DONE: All threads have been created\n', 'blue'))
 
     print(colored('Please wait. . . The program is currently generating the hash table rule sets.', 'yellow'))
     print(colored('Periodic updates will be given along the way displaying the programs progress.\n', 'yellow'))
@@ -590,7 +590,7 @@ def main():
           or waitUntilDoneBuilding[8] == True or waitUntilDoneBuilding[9] == True or waitUntilDoneBuilding[10] == True
           or waitUntilDoneBuilding[11] == True or waitUntilDoneBuilding[12] == True or waitUntilDoneBuilding[13] == True):
         spin = True
-    print(colored('DONE: all hash table rule sets have been created\n', 'green'))
+    print(colored('DONE: All hash table rule sets have been created\n', 'blue'))
 
     
     #for i in range(len(plaintext)):
