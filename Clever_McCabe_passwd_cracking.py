@@ -19,6 +19,8 @@ ruleFourDictionary7 = {}
 
 ruleFiveDictionary = {}
 
+waitUntilDoneBuilding = [True, True, True, True, True, True]
+
 symbols = ["*", "~", "!", "#"]
 
 wordlist = open('/usr/share/dict/words', 'r')
@@ -171,8 +173,10 @@ def ruleOneAndThreeAndFivePasswords():
             rule3Sha256.update(line.encode())
             rule3Sha256 = rule3Sha256.hexdigest()
             ruleThreeDictionary[rule3Sha256] = fulltext
+    waitUntilDoneBuilding[3] = False
+    
 
-def ruleTwoAndRuleFourLengthFour():
+def ruleTwoAndRuleFourLength4():
     for a in range(10):
         for b in range(10):
             for c in range(10):
@@ -188,6 +192,7 @@ def ruleTwoAndRuleFourLengthFour():
                     rule4For4Sha256.update(number.encode())
                     rule4For4Sha256 = rule4For4Sha256.hexdigest()
                     ruleFourDictionary4[rule4For4Sha256] = number
+    waitUntilDoneBuilding[4] = False
 
 def ruleFourLength1to3():
     for a in range(10):
@@ -211,16 +216,77 @@ def ruleFourLength1to3():
                 rule4For1to3Sha256.update(number.encode())
                 rule4For1to3Sha256 = rule4For1to3Sha256.hexdigest()
                 ruleFourDictionary1to3[rule4For1to3Sha256] = number
+    waitUntilDoneBuilding[5] = False
 
+def ruleFourLength5():
+    for a in range(10):
+        for b in range(10):
+            for c in range(10):
+                for d in range(10):
+                    for e in range(10):
+                        number = str(a) + str(b) + str(c) + str(d) + str(e)
+                        rule4For5Sha256 = hashlib.sha256()
+                        rule4For5Sha256.update(number.encode())
+                        rule4For5Sha256 = rule4For5Sha256.hexdigest()
+                        ruleFourDictionary5[rule4For5Sha256] = number
+    waitUntilDoneBuilding[2] = False
 
+def ruleFourLength6():
+    for a in range(10):
+        for b in range(10):
+            for c in range(10):
+                for d in range(10):
+                    for e in range(10):
+                        for f in range(10):
+                            number = str(a) + str(b) + str(c) + str(d) + str(e) + str(f)
+                            rule4For6Sha256 = hashlib.sha256()
+                            rule4For6Sha256.update(number.encode())
+                            rule4For6Sha256 = rule4For6Sha256.hexdigest()
+                            ruleFourDictionary6[rule4For6Sha256] = number
+    waitUntilDoneBuilding[1] = False
 
-
+def ruleFourLength7():
+    for a in range(10):
+        for b in range(10):
+            for c in range(10):
+                for d in range(10):
+                    for e in range(10):
+                        for f in range(10):
+                            for g in range(10):
+                                number = str(a) + str(b) + str(c) + str(d) + str(e) + str(f) + str(g)
+                                print(number)
+                                rule4For7Sha256 = hashlib.sha256()
+                                rule4For7Sha256.update(number.encode())
+                                rule4For7Sha256 = rule4For7Sha256.hexdigest()
+                                ruleFourDictionary7[rule4For7Sha256] = number
+    waitUntilDoneBuilding[0] = False
             
 def main():
-    ruleOneAndThreeAndFivePasswords()
-    ruleTwoAndRuleFourLengthFour()
-    ruleFourLength1to3()
-    print(ruleFourDictionary1to3)
+    
+    # threadZero = Thread(target = ruleFourLength7)
+    # threadZero.start()
+
+    threadOne = Thread(target = ruleFourLength6)
+    threadOne.start()
+
+    threadTwo = Thread(target = ruleFourLength5)
+    threadTwo.start()
+
+    threadThree = Thread(target = ruleOneAndThreeAndFivePasswords)
+    threadThree.start()
+
+    threadFour = Thread(target = ruleTwoAndRuleFourLength4)
+    threadFour.start()
+
+    threadFive = Thread(target = ruleFourLength1to3)
+    threadFive.start()
+    
+    while(waitUntilDoneBuilding[1] == True or waitUntilDoneBuilding[2] == True 
+          or waitUntilDoneBuilding[3] == True or waitUntilDoneBuilding[4] == True 
+          or waitUntilDoneBuilding[5] == True):
+        spin = True
+    print(len(ruleFiveDictionary))
+
     
     #for i in range(len(plaintext)):
     #   print (plaintext[i])    
