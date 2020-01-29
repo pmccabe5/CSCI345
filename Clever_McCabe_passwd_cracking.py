@@ -4,11 +4,23 @@
 import hashlib
 from threading import *
 from termcolor import colored
-ruleFiveDictionary = {}
+
 ruleOneDictionary = {}
+
 ruleTwoDictionary = {}
+
 ruleThreeDictionary = {}
-ruleFourDictionary = {}
+
+ruleFourDictionary1to3 = {}
+ruleFourDictionary4 = {}
+ruleFourDictionary5 = {}
+ruleFourDictionary6 = {}
+ruleFourDictionary7 = {}
+
+ruleFiveDictionary = {}
+
+symbols = ["*", "~", "!", "#"]
+
 wordlist = open('/usr/share/dict/words', 'r')
 #passwordDump = open('passwordDump.txt', 'r')
 #outfile = open('cracked-passwords-Clever-McCabe.txt', 'w')
@@ -158,11 +170,57 @@ def ruleOneAndThreeAndFivePasswords():
             rule3Sha256 = hashlib.sha256()
             rule3Sha256.update(line.encode())
             rule3Sha256 = rule3Sha256.hexdigest()
-            ruleThreeDictionary[rule3Sha256] = fulltext 
+            ruleThreeDictionary[rule3Sha256] = fulltext
+
+def ruleTwoAndRuleFourLengthFour():
+    for a in range(10):
+        for b in range(10):
+            for c in range(10):
+                for d in range(10):
+                    for e in range(4):
+                        word = symbols[e] + str(a) + str(b) + str(c) + str(d)
+                        rule2Sha256 = hashlib.sha256()
+                        rule2Sha256.update(word.encode())
+                        rule2Sha256 = rule2Sha256.hexdigest()
+                        ruleTwoDictionary[rule2Sha256] = word
+                    number = str(a) + str(b) + str(c) + str(d)
+                    rule4For4Sha256 = hashlib.sha256()
+                    rule4For4Sha256.update(number.encode())
+                    rule4For4Sha256 = rule4For4Sha256.hexdigest()
+                    ruleFourDictionary4[rule4For4Sha256] = number
+
+def ruleFourLength1to3():
+    for a in range(10):
+        number = str(a)
+        rule4For1to3Sha256 = hashlib.sha256()
+        rule4For1to3Sha256.update(number.encode())
+        rule4For1to3Sha256 = rule4For1to3Sha256.hexdigest()
+        ruleFourDictionary1to3[rule4For1to3Sha256] = number
+    for a in range(10):
+        for b in range(10):
+            number = str(a) + str(b)
+            rule4For1to3Sha256 = hashlib.sha256()
+            rule4For1to3Sha256.update(number.encode())
+            rule4For1to3Sha256 = rule4For1to3Sha256.hexdigest()
+            ruleFourDictionary1to3[rule4For1to3Sha256] = number
+    for a in range(10):
+        for b in range(10):
+            for c in range(10):
+                number = str(a) + str(b) + str(c)
+                rule4For1to3Sha256 = hashlib.sha256()
+                rule4For1to3Sha256.update(number.encode())
+                rule4For1to3Sha256 = rule4For1to3Sha256.hexdigest()
+                ruleFourDictionary1to3[rule4For1to3Sha256] = number
+
+
+
+
             
 def main():
     ruleOneAndThreeAndFivePasswords()
-    print(ruleThreeDictionary)
+    ruleTwoAndRuleFourLengthFour()
+    ruleFourLength1to3()
+    print(ruleFourDictionary1to3)
     
     #for i in range(len(plaintext)):
     #   print (plaintext[i])    
