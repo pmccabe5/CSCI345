@@ -1,37 +1,40 @@
 #!/usr/bin/python3
 #Clever, Clare & McCabe, Patrick
 #HW1, Spring 2020
-
-# libraries needed for execution: hashlib, threading, and termcolor (for aesthetic purpose)
 import hashlib
 from threading import *
 from termcolor import colored
 
-# dictionaries for rules one, two, and three
 ruleOneDictionary = {}
+
 ruleTwoDictionary = {}
+
 ruleThreeDictionary = {}
 
-# individual dictionaries for rule four based on length of the password before hashing
 ruleFourDictionary1to3 = {}
 ruleFourDictionary4 = {}
 ruleFourDictionary5 = {}
 ruleFourDictionary6 = {}
-ruleFourDictionary7 = {}
+ruleFourDictionary7_0 = {}
+ruleFourDictionary7_1 = {}
+ruleFourDictionary7_2 = {}
+ruleFourDictionary7_3 = {}
+ruleFourDictionary7_4 = {}
+ruleFourDictionary7_5 = {}
+ruleFourDictionary7_6 = {}
+ruleFourDictionary7_7 = {}
+ruleFourDictionary7_8 = {}
+ruleFourDictionary7_9 = {}
 
-# dictionary specifically for rule five
 ruleFiveDictionary = {}
 
-# booleans to keep track of whether or not the hash tables are done generating
-waitUntilDoneBuilding = [True, True, True, True, True, True]
+waitUntilDoneBuilding = [True, True, True, True, True, True, True, True, True, True, True, True, True, True]
 
-# symbols that are included in rule four
 symbols = ["*", "~", "!", "#"]
 
-# files needed for the operation of the program
 wordlist = open('/usr/share/dict/words', 'r')
-passwordDump = open('passwordDump.txt', 'r')
-outfile = open('cracked-passwords-Clever-McCabe.txt', 'w')
+#passwordDump = open('passwordDump.txt', 'r')
+#outfile = open('cracked-passwords-Clever-McCabe.txt', 'w')
 passwordsCracked = 0
 
 
@@ -154,40 +157,17 @@ def threaded(passwd):
     global passwordsCracked 
     passwordsCracked =  passwordsCracked + 1
 
-'''
-This method generates the hashed passords in the form of 
-a hash table, usng the dictionary data type for rules one, 
-three, and five. These rules are generated at the same time
-due to the word file, /usr/share/dict/words, being open and being used
-in all three of the rules. 
-'''
 
 def ruleOneAndThreeAndFivePasswords():
-    
-    # iterates through /usr/share/dict/words 
     for line in wordlist:
-
-        # fulltext is an alias for line so it can be used without capitalization
-        # or a number added on for rule one. fulltext is used for both rules three 
-        # and five. New line character is stripped with the .strip('\n')
         fulltext = line.strip('\n')
-
-        # rule5Sha256 is the process of hashing fulltext before insertion into
-        # the hash table
         rule5Sha256 = hashlib.sha256()
         rule5Sha256.update(line.encode())
         rule5Sha256 = rule5Sha256.hexdigest()
-        ruleFiveDictionary[rule5Sha256] = fulltext   
-
+        ruleFiveDictionary[rule5Sha256] = fulltext     
         if len(line) == 7:
-
-            # line is taken from the general file iterator and is only used for rule 
-            # three due to the capitalization and number appending to satisfy rule one
             line = line.capitalize()
             line = line.strip('\n')
-
-            # appending of single digit to line before hashing and storage 
-            # into the dictionary
             for count in range(10):
                 temp = line.strip('\n')
                 temp = temp + str(count)
@@ -195,10 +175,6 @@ def ruleOneAndThreeAndFivePasswords():
                 sha256.update(temp.encode())
                 sha256 = sha256.hexdigest()
                 ruleOneDictionary[sha256] = temp
-
-        # if statement used to satisfy rule three. fulltext is used in order to have 
-        # a clean input for the SHA256 hashing and replacement of 'a' to '@' as well
-        # as 'l' to '1'
         if len(fulltext) == 5:
             fulltext = fulltext.replace('a', '@')
             fulltext = fulltext.replace('l', '1')
@@ -206,19 +182,8 @@ def ruleOneAndThreeAndFivePasswords():
             rule3Sha256.update(line.encode())
             rule3Sha256 = rule3Sha256.hexdigest()
             ruleThreeDictionary[rule3Sha256] = fulltext
-        
     waitUntilDoneBuilding[3] = False
     
-'''
-This method generates the hashes for rules two and four, as they are 
-numeric based passwords up to four digits in length. 
-Rule two specifies the location of a special character
-defined as one of the following characters ["*", "~", "!", "#"] and a number of
-four digits in length. Rule four generates passwords of numbers up to seven
-digits in length without any special characters added. Also, the generation of 
-hashes is split up into smaller functions of varying length to improve on the
-efficiency of the program.
-'''
 
 def ruleTwoAndRuleFourLength4():
     for a in range(10):
@@ -237,12 +202,6 @@ def ruleTwoAndRuleFourLength4():
                     rule4For4Sha256 = rule4For4Sha256.hexdigest()
                     ruleFourDictionary4[rule4For4Sha256] = number
     waitUntilDoneBuilding[4] = False
-
-'''
-This method continues from the previous method for rule four
-and generates hashes up to length six for rule four, 
-without any of the special characters from rule two.
-'''
 
 def ruleFourLength1to3():
     for a in range(10):
@@ -268,12 +227,6 @@ def ruleFourLength1to3():
                 ruleFourDictionary1to3[rule4For1to3Sha256] = number
     waitUntilDoneBuilding[5] = False
 
-'''
-This method continues from the previous method for rule four
-and generates hashes up to length five for rule four, 
-without any of the special characters from rule two.
-'''
-
 def ruleFourLength5():
     for a in range(10):
         for b in range(10):
@@ -287,13 +240,7 @@ def ruleFourLength5():
                         ruleFourDictionary5[rule4For5Sha256] = number
     waitUntilDoneBuilding[2] = False
 
-'''
-This method continues from the previous method for rule four
-and generates hashes up to length six for rule four, 
-without any of the special characters from rule two.
-'''
-
-def ruleFourLength6():
+def ruleFourLength6andLength7Start0():
     for a in range(10):
         for b in range(10):
             for c in range(10):
@@ -305,36 +252,192 @@ def ruleFourLength6():
                             rule4For6Sha256.update(number.encode())
                             rule4For6Sha256 = rule4For6Sha256.hexdigest()
                             ruleFourDictionary6[rule4For6Sha256] = number
+
+                            number = str(a) + str(b) + str(c) + str(d) + str(e) + str(f) + str(0)
+                            rule4For7Sha256 = hashlib.sha256()
+                            rule4For7Sha256.update(number.encode())
+                            rule4For7Sha256 = rule4For7Sha256.hexdigest()
+                            ruleFourDictionary7_0[rule4For7Sha256] = number
+
+                            if(number == '1000000'):
+                                print("Current Status:")
+                                print("8,999,999 Left . . .")
+                            elif(number == '2000000'):
+                                print("7,999,999 Left . . .")
+                            elif(number == '3000000'):
+                                print("6,999,999 Left . . .")
+                            elif(number == '4000000'):
+                                print("5,999,999 Left . . .")
+                            elif(number == '5000000'):
+                                print("4,999,999 Left . . .")
+                            elif(number == '6000000'):
+                                print("3,999,999 Left . . .")
+                            elif(number == '7000000'):
+                                print("2,999,999 Left . . .")
+                            elif(number == '8000000'):
+                                print("1,999,999 Left . . .")
+                            elif(number == '9000000'):
+                                print("999,999 Left . . .\n")
+
     waitUntilDoneBuilding[1] = False
 
-'''
-This method continues from the previous method for rule four
-and generates hashes up to length seven for rule four, 
-without any of the special characters from rule two.
-'''
-
-def ruleFourLength7():
+def ruleFourLength7Start1():
     for a in range(10):
         for b in range(10):
             for c in range(10):
                 for d in range(10):
                     for e in range(10):
                         for f in range(10):
-                            for g in range(10):
-                                number = str(a) + str(b) + str(c) + str(d) + str(e) + str(f) + str(g)
-                                print(number)
-                                rule4For7Sha256 = hashlib.sha256()
-                                rule4For7Sha256.update(number.encode())
-                                rule4For7Sha256 = rule4For7Sha256.hexdigest()
-                                ruleFourDictionary7[rule4For7Sha256] = number
+                            number = str(a) + str(b) + str(c) + str(d) + str(e) + str(f) + str(1)
+                            rule4For7Sha256 = hashlib.sha256()
+                            rule4For7Sha256.update(number.encode())
+                            rule4For7Sha256 = rule4For7Sha256.hexdigest()
+                            ruleFourDictionary7_1[rule4For7Sha256] = number
     waitUntilDoneBuilding[0] = False
 
-def main():
-    
-    # threadZero = Thread(target = ruleFourLength7)
-    # threadZero.start()
+def ruleFourLength7Start2():
+    for a in range(10):
+        for b in range(10):
+            for c in range(10):
+                for d in range(10):
+                    for e in range(10):
+                        for f in range(10):
+                            number = str(a) + str(b) + str(c) + str(d) + str(e) + str(f) + str(2)
+                            rule4For7Sha256 = hashlib.sha256()
+                            rule4For7Sha256.update(number.encode())
+                            rule4For7Sha256 = rule4For7Sha256.hexdigest()
+                            ruleFourDictionary7_2[rule4For7Sha256] = number
+    waitUntilDoneBuilding[6] = False
 
-    threadOne = Thread(target = ruleFourLength6)
+def ruleFourLength7Start3():
+    for a in range(10):
+        for b in range(10):
+            for c in range(10):
+                for d in range(10):
+                    for e in range(10):
+                        for f in range(10):
+                            number = str(a) + str(b) + str(c) + str(d) + str(e) + str(f) + str(3)
+                            rule4For7Sha256 = hashlib.sha256()
+                            rule4For7Sha256.update(number.encode())
+                            rule4For7Sha256 = rule4For7Sha256.hexdigest()
+                            ruleFourDictionary7_3[rule4For7Sha256] = number
+    waitUntilDoneBuilding[7] = False
+
+def ruleFourLength7Start4():
+    for a in range(10):
+        for b in range(10):
+            for c in range(10):
+                for d in range(10):
+                    for e in range(10):
+                        for f in range(10):
+                            number = str(a) + str(b) + str(c) + str(d) + str(e) + str(f) + str(4)
+                            rule4For7Sha256 = hashlib.sha256()
+                            rule4For7Sha256.update(number.encode())
+                            rule4For7Sha256 = rule4For7Sha256.hexdigest()
+                            ruleFourDictionary7_4[rule4For7Sha256] = number
+    waitUntilDoneBuilding[8] = False
+
+def ruleFourLength7Start5():
+    for a in range(10):
+        for b in range(10):
+            for c in range(10):
+                for d in range(10):
+                    for e in range(10):
+                        for f in range(10):
+                            number = str(a) + str(b) + str(c) + str(d) + str(e) + str(f) + str(5)
+                            rule4For7Sha256 = hashlib.sha256()
+                            rule4For7Sha256.update(number.encode())
+                            rule4For7Sha256 = rule4For7Sha256.hexdigest()
+                            ruleFourDictionary7_5[rule4For7Sha256] = number
+    waitUntilDoneBuilding[9] = False
+
+def ruleFourLength7Start6():
+    for a in range(10):
+        for b in range(10):
+            for c in range(10):
+                for d in range(10):
+                    for e in range(10):
+                        for f in range(10):
+                            number = str(a) + str(b) + str(c) + str(d) + str(e) + str(f) + str(6)
+                            rule4For7Sha256 = hashlib.sha256()
+                            rule4For7Sha256.update(number.encode())
+                            rule4For7Sha256 = rule4For7Sha256.hexdigest()
+                            ruleFourDictionary7_6[rule4For7Sha256] = number
+    waitUntilDoneBuilding[10] = False
+
+def ruleFourLength7Start7():
+    for a in range(10):
+        for b in range(10):
+            for c in range(10):
+                for d in range(10):
+                    for e in range(10):
+                        for f in range(10):
+                            number = str(a) + str(b) + str(c) + str(d) + str(e) + str(f) + str(7)
+                            rule4For7Sha256 = hashlib.sha256()
+                            rule4For7Sha256.update(number.encode())
+                            rule4For7Sha256 = rule4For7Sha256.hexdigest()
+                            ruleFourDictionary7_7[rule4For7Sha256] = number
+    waitUntilDoneBuilding[11] = False
+
+def ruleFourLength7Start8():
+    for a in range(10):
+        for b in range(10):
+            for c in range(10):
+                for d in range(10):
+                    for e in range(10):
+                        for f in range(10):
+                            number = str(a) + str(b) + str(c) + str(d) + str(e) + str(f) + str(8)
+                            rule4For7Sha256 = hashlib.sha256()
+                            rule4For7Sha256.update(number.encode())
+                            rule4For7Sha256 = rule4For7Sha256.hexdigest()
+                            ruleFourDictionary7_8[rule4For7Sha256] = number
+    waitUntilDoneBuilding[12] = False
+
+def ruleFourLength7Start9():
+    for a in range(10):
+        for b in range(10):
+            for c in range(10):
+                for d in range(10):
+                    for e in range(10):
+                        for f in range(10):
+                            number = str(a) + str(b) + str(c) + str(d) + str(e) + str(f) + str(9)
+                            rule4For7Sha256 = hashlib.sha256()
+                            rule4For7Sha256.update(number.encode())
+                            rule4For7Sha256 = rule4For7Sha256.hexdigest()
+                            ruleFourDictionary7_9[rule4For7Sha256] = number
+    waitUntilDoneBuilding[13] = False
+            
+def main():
+    print('The program will begin by creating all the threads to build the hash table rule sets.\n')
+
+    threadZero = Thread(target = ruleFourLength7Start1)
+    threadZero.start()
+
+    threadSix = Thread(target = ruleFourLength7Start2)
+    threadSix.start()
+
+    threadSeven = Thread(target = ruleFourLength7Start3)
+    threadSeven.start()
+
+    threadEight = Thread(target = ruleFourLength7Start4)
+    threadEight.start()
+
+    threadNine = Thread(target = ruleFourLength7Start5)
+    threadNine.start()
+
+    threadTen = Thread(target = ruleFourLength7Start6)
+    threadTen.start()
+
+    threadEleven = Thread(target = ruleFourLength7Start7)
+    threadEleven.start()
+
+    threadTwelve = Thread(target = ruleFourLength7Start8)
+    threadTwelve.start()
+
+    threadThirteen = Thread(target = ruleFourLength7Start9)
+    threadThirteen.start()
+
+    threadOne = Thread(target = ruleFourLength6andLength7Start0)
     threadOne.start()
 
     threadTwo = Thread(target = ruleFourLength5)
@@ -348,12 +451,19 @@ def main():
 
     threadFive = Thread(target = ruleFourLength1to3)
     threadFive.start()
+
+    print('DONE: all threads have been created\n')
+
+    print('Please wait. . . The program is currently generating the hash table rule sets.')
+    print('Periodic updates will be given along the way displaying the programs progress.\n')
     
-    while(waitUntilDoneBuilding[1] == True or waitUntilDoneBuilding[2] == True 
+    while(waitUntilDoneBuilding[0] == True or waitUntilDoneBuilding[1] == True or waitUntilDoneBuilding[2] == True 
           or waitUntilDoneBuilding[3] == True or waitUntilDoneBuilding[4] == True 
-          or waitUntilDoneBuilding[5] == True):
+          or waitUntilDoneBuilding[5] == True or waitUntilDoneBuilding[6] == True or waitUntilDoneBuilding[7] == True 
+          or waitUntilDoneBuilding[8] == True or waitUntilDoneBuilding[9] == True or waitUntilDoneBuilding[10] == True
+          or waitUntilDoneBuilding[11] == True or waitUntilDoneBuilding[12] == True or waitUntilDoneBuilding[13] == True):
         spin = True
-    print(len(ruleFiveDictionary))
+    print('DONE: all hash table rule sets have been created\n')
 
     
     #for i in range(len(plaintext)):
