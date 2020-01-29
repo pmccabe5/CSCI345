@@ -41,7 +41,8 @@ symbols = ["*", "~", "!", "#"]
 passwordHashes = []
 
 # files needed for the operation of the program
-wordlist = open('/usr/share/dict/words', 'r')
+wordlist = open('words.txt', 'r')
+#wordlist = open('words.txt', 'r')
 passwordDump = open('passwordDump.txt', 'r')
 outfile = open('cracked-passwords-Clever-McCabe.txt', 'w')
 passwordsCracked = 0
@@ -188,10 +189,10 @@ def ruleOneAndThreeAndFivePasswords():
         # rule5Sha256 is the process of hashing fulltext before insertion into
         # the hash table
         rule5Sha256 = hashlib.sha256()
-        rule5Sha256.update(line.encode())
+        rule5Sha256.update(fulltext.encode())
         rule5Sha256 = rule5Sha256.hexdigest()
         ruleFiveDictionary[rule5Sha256] = fulltext     
-        if len(line) == 7:
+        if len(fulltext) == 7:
 
             # line is taken from the general file iterator and is only used for rule 
             # three due to the capitalization and number appending to satisfy rule one
@@ -215,7 +216,7 @@ def ruleOneAndThreeAndFivePasswords():
             fulltext = fulltext.replace('a', '@')
             fulltext = fulltext.replace('l', '1')
             rule3Sha256 = hashlib.sha256()
-            rule3Sha256.update(line.encode())
+            rule3Sha256.update(fulltext.encode())
             rule3Sha256 = rule3Sha256.hexdigest()
             ruleThreeDictionary[rule3Sha256] = fulltext
     print(colored('DONE: Rule One, Three and Five hash tables created', 'blue'))
@@ -606,9 +607,124 @@ def main():
     
     print(colored('DONE: All hash table rule sets have been created', 'blue'))
 
-    print(passwordHashes)
-
-    
+    for hashedPassword in passwordHashes:
+        hashFound = False
+        if(hashFound == False):
+            try:
+                print(ruleOneDictionary[hashedPassword])
+                hashFound = True
+            except:
+                hashFound = False
+        if(hashFound == False):
+            try:
+                print(ruleTwoDictionary[hashedPassword])
+                hashFound = True
+            except:
+                hashFound = False
+        if(hashFound == False):
+            try:
+                print(ruleThreeDictionary[hashedPassword])
+                hashFound = True
+            except:
+                hashFound = False
+        if(hashFound == False):
+            try:
+                print(ruleFourDictionary1to3[hashedPassword])
+                hashFound = True
+            except:
+                hashFound = False
+        if(hashFound == False):
+            try:
+                print(ruleFourDictionary1to3[hashedPassword])
+                hashFound = True
+            except:
+                hashFound = False
+        if(hashFound == False):
+            try:
+                print(ruleFourDictionary4[hashedPassword])
+                hashFound = True
+            except:
+                hashFound = False
+        if(hashFound == False):
+            try:
+                print(ruleFourDictionary5[hashedPassword])
+                hashFound = True
+            except:
+                hashFound = False
+        if(hashFound == False):
+            try:
+                print(ruleFourDictionary6[hashedPassword])
+                hashFound = True
+            except:
+                hashFound = False
+        if(hashFound == False):
+            try:
+                print(ruleFourDictionary7_0[hashedPassword])
+                hashFound = True
+            except:
+                hashFound = False
+        if(hashFound == False):
+            try:
+                print(ruleFourDictionary7_1[hashedPassword])
+                hashFound = True
+            except:
+                hashFound = False
+        if(hashFound == False):
+            try:
+                print(ruleFourDictionary7_2[hashedPassword])
+                hashFound = True
+            except:
+                hashFound = False
+        if(hashFound == False):
+            try:
+                print(ruleFourDictionary7_3[hashedPassword])
+                hashFound = True
+            except:
+                hashFound = False
+        if(hashFound == False):
+            try:
+                print(ruleFourDictionary7_4[hashedPassword])
+                hashFound = True
+            except:
+                hashFound = False
+        if(hashFound == False):
+            try:
+                print(ruleFourDictionary7_5[hashedPassword])
+                hashFound = True
+            except:
+                hashFound = False
+        if(hashFound == False):
+            try:
+                print(ruleFourDictionary7_6[hashedPassword])
+                hashFound = True
+            except:
+                hashFound = False
+        if(hashFound == False):
+            try:
+                print(ruleFourDictionary7_7[hashedPassword])
+                hashFound = True
+            except:
+                hashFound = False
+        if(hashFound == False):
+            try:
+                print(ruleFourDictionary7_8[hashedPassword])
+                hashFound = True
+            except:
+                hashFound = False
+        if(hashFound == False):
+            try:
+                print(ruleFourDictionary7_9[hashedPassword])
+                hashFound = True
+            except:
+                hashFound = False
+        if(hashFound == False):
+            try:
+                print(ruleFiveDictionary[hashedPassword])
+                hashFound = True
+            except:
+                hashFound = False
+        if(hashFound == False):
+            print('Hash not found . . .' + hashedPassword)
     
     #for i in range(len(plaintext)):
     #   print (plaintext[i])    
