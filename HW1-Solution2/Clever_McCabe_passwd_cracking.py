@@ -5,6 +5,7 @@ import hashlib
 from threading import *
 from termcolor import colored
 
+#dictionaries for the individual rules
 ruleOneDictionary = {}
 
 ruleTwoDictionary = {}
@@ -24,8 +25,8 @@ waitUntilDoneBuilding = [True, True, True, True, True, True]
 symbols = ["*", "~", "!", "#"]
 
 wordlist = open('/usr/share/dict/words', 'r')
-#passwordDump = open('passwordDump.txt', 'r')
-#outfile = open('cracked-passwords-Clever-McCabe.txt', 'w')
+passwordDump = open('passwordDump.txt', 'r')
+outfile = open('cracked-passwords-Clever-McCabe.txt', 'w')
 passwordsCracked = 0
 
 
@@ -148,6 +149,13 @@ def threaded(passwd):
     global passwordsCracked 
     passwordsCracked =  passwordsCracked + 1
 
+'''
+This method generates the hashed passords in the form of 
+a hash table, usng the dictionary data type for rules one, 
+three, and five. These rules are generated at the same time
+due to the word file, /usr/share/dict/words, being open and being used
+in all three of the rules. 
+'''
 
 def ruleOneAndThreeAndFivePasswords():
     for line in wordlist:
@@ -175,6 +183,16 @@ def ruleOneAndThreeAndFivePasswords():
             ruleThreeDictionary[rule3Sha256] = fulltext
     waitUntilDoneBuilding[3] = False
     
+'''
+This method generates the hashes for rules two and four, as they are 
+numeric based passwords up to four digits in length. 
+Rule two specifies the location of a special character
+defined as one of the following characters ["*", "~", "!", "#"] and a number of
+four digits in length. Rule four generates passwords of numbers up to seven
+digits in length without any special characters added. Also, the generation of 
+hashes is split up into smaller functions of varying length to improve on the
+efficiency of the program.
+'''
 
 def ruleTwoAndRuleFourLength4():
     for a in range(10):
@@ -193,6 +211,12 @@ def ruleTwoAndRuleFourLength4():
                     rule4For4Sha256 = rule4For4Sha256.hexdigest()
                     ruleFourDictionary4[rule4For4Sha256] = number
     waitUntilDoneBuilding[4] = False
+
+'''
+This method continues from the previous method for rule four
+and generates hashes up to length six for rule four, 
+without any of the special characters from rule two.
+'''
 
 def ruleFourLength1to3():
     for a in range(10):
@@ -218,6 +242,12 @@ def ruleFourLength1to3():
                 ruleFourDictionary1to3[rule4For1to3Sha256] = number
     waitUntilDoneBuilding[5] = False
 
+'''
+This method continues from the previous method for rule four
+and generates hashes up to length five for rule four, 
+without any of the special characters from rule two.
+'''
+
 def ruleFourLength5():
     for a in range(10):
         for b in range(10):
@@ -230,6 +260,12 @@ def ruleFourLength5():
                         rule4For5Sha256 = rule4For5Sha256.hexdigest()
                         ruleFourDictionary5[rule4For5Sha256] = number
     waitUntilDoneBuilding[2] = False
+
+'''
+This method continues from the previous method for rule four
+and generates hashes up to length six for rule four, 
+without any of the special characters from rule two.
+'''
 
 def ruleFourLength6():
     for a in range(10):
@@ -244,6 +280,12 @@ def ruleFourLength6():
                             rule4For6Sha256 = rule4For6Sha256.hexdigest()
                             ruleFourDictionary6[rule4For6Sha256] = number
     waitUntilDoneBuilding[1] = False
+
+'''
+This method continues from the previous method for rule four
+and generates hashes up to length seven for rule four, 
+without any of the special characters from rule two.
+'''
 
 def ruleFourLength7():
     for a in range(10):
