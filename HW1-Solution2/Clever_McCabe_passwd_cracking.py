@@ -1,29 +1,34 @@
 #!/usr/bin/python3
 #Clever, Clare & McCabe, Patrick
 #HW1, Spring 2020
+
+# libraries needed for execution: hashlib, threading, and termcolor (for aesthetic purpose)
 import hashlib
 from threading import *
 from termcolor import colored
 
-#dictionaries for the individual rules
+# dictionaries for rules one, two, and three
 ruleOneDictionary = {}
-
 ruleTwoDictionary = {}
-
 ruleThreeDictionary = {}
 
+# individual dictionaries for rule four based on length of the password before hashing
 ruleFourDictionary1to3 = {}
 ruleFourDictionary4 = {}
 ruleFourDictionary5 = {}
 ruleFourDictionary6 = {}
 ruleFourDictionary7 = {}
 
+# dictionary specifically for rule five
 ruleFiveDictionary = {}
 
+# booleans to keep track of whether or not the hash tables are done generating
 waitUntilDoneBuilding = [True, True, True, True, True, True]
 
+# symbols that are included in rule four
 symbols = ["*", "~", "!", "#"]
 
+# files needed for the operation of the program
 wordlist = open('/usr/share/dict/words', 'r')
 passwordDump = open('passwordDump.txt', 'r')
 outfile = open('cracked-passwords-Clever-McCabe.txt', 'w')
@@ -158,15 +163,31 @@ in all three of the rules.
 '''
 
 def ruleOneAndThreeAndFivePasswords():
+    
+    # iterates through /usr/share/dict/words 
     for line in wordlist:
+
+        # fulltext is an alias for line so it can be used without capitalization
+        # or a number added on for rule one. fulltext is used for both rules three 
+        # and five. New line character is stripped with the .strip('\n')
         fulltext = line.strip('\n')
+
+        # rule5Sha256 is the process of hashing fulltext before insertion into
+        # the hash table
         rule5Sha256 = hashlib.sha256()
         rule5Sha256.update(line.encode())
         rule5Sha256 = rule5Sha256.hexdigest()
-        ruleFiveDictionary[rule5Sha256] = fulltext     
+        ruleFiveDictionary[rule5Sha256] = fulltext   
+
         if len(line) == 7:
+
+            # line is taken from the general file iterator and is only used for rule 
+            # three due to the capitalization and number appending to satisfy rule one
             line = line.capitalize()
             line = line.strip('\n')
+
+            # appending of single digit to line before hashing and storage 
+            # into the dictionary
             for count in range(10):
                 temp = line.strip('\n')
                 temp = temp + str(count)
@@ -174,6 +195,10 @@ def ruleOneAndThreeAndFivePasswords():
                 sha256.update(temp.encode())
                 sha256 = sha256.hexdigest()
                 ruleOneDictionary[sha256] = temp
+
+        # if statement used to satisfy rule three. fulltext is used in order to have 
+        # a clean input for the SHA256 hashing and replacement of 'a' to '@' as well
+        # as 'l' to '1'
         if len(fulltext) == 5:
             fulltext = fulltext.replace('a', '@')
             fulltext = fulltext.replace('l', '1')
@@ -181,6 +206,7 @@ def ruleOneAndThreeAndFivePasswords():
             rule3Sha256.update(line.encode())
             rule3Sha256 = rule3Sha256.hexdigest()
             ruleThreeDictionary[rule3Sha256] = fulltext
+        
     waitUntilDoneBuilding[3] = False
     
 '''
@@ -302,7 +328,7 @@ def ruleFourLength7():
                                 rule4For7Sha256 = rule4For7Sha256.hexdigest()
                                 ruleFourDictionary7[rule4For7Sha256] = number
     waitUntilDoneBuilding[0] = False
-    
+
 def main():
     
     # threadZero = Thread(target = ruleFourLength7)
