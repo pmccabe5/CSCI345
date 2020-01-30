@@ -42,7 +42,6 @@ passwordHashes = []
 
 # files needed for the operation of the program
 wordlist = open('words.txt', 'r')
-#wordlist = open('words.txt', 'r')
 passwordDump = open('passwordDump.txt', 'r')
 outfile = open('cracked-passwords-Clever-McCabe.txt', 'w')
 passwordsCracked = 0
