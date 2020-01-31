@@ -187,6 +187,8 @@ without any of the special characters from rule two.
 The method also lets the user see the current status of the
 list generation. This method also prints out updates for the user
 in order to see where the program is currently.
+=======
+
 '''
 
 def ruleFourLength6andLength7Start0():
@@ -430,6 +432,7 @@ the specified hash file in the README. The other functionality of the main metho
 that have been loaded into the program to the hashes stored in the hashtables.
 '''   
 
+
 def main():
     print(colored('The program will begin by creating all the threads to build the hash table rule sets.', 'yellow'))
 
@@ -631,11 +634,9 @@ def main():
         if(hashFound == False):
             print(colored('Hash not found . . . ' + hashedPassword, 'red'))
         
-    #for i in range(len(plaintext)):
-    #   print (plaintext[i])    
-        
 main()
 
+<<<<<<< Updated upstream
 '''
 
 passwds = []
@@ -688,3 +689,5 @@ def ruleFourPasswords():
     hashfile.close()   
 
 '''
+=======
+>>>>>>> Stashed changes

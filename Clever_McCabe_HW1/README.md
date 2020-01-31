@@ -4,7 +4,7 @@
 ## How to run HW1
 1. Make sure python3 is installed in your environment.
 2. Open a terminal and navigate to the folder containing `Clever_McCabe_HW1_passwd_cracking.py`
-3. Run the following commands in the terminal:
+3. Run the following commands in a terminal:
     * `pip3 install termcolor`
     * `python3 Clever_McCabe_HW1_passwd_cracking.py`
 ## Input and Output
