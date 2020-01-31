@@ -91,7 +91,7 @@ def ruleOneAndThreeAndFivePasswords():
         # if statement used to satisfy rule three. fulltext is used in order to have 
         # a clean input for the SHA256 hashing and replacement of 'a' to '@' as well
         # as 'l' to '1'   
-        if len(fulltext) == 5:
+        if len(fulltext) == 5 and (('a' in fulltext) or (('l' in fulltext))):
             fulltext = fulltext.replace('a', '@')
             fulltext = fulltext.replace('l', '1')
             rule3Sha256 = hashlib.sha256()
