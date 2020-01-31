@@ -17,7 +17,7 @@ that satisfy all the rules, as well as the memory needed to load the hashes into
 * The overall runtime of the program is improved upon by using the included threadding library included in python to mulithread the generation of the hashes at runtime.
 * Comparison of the hash that is input into the program is almost instataneous, due to the hash table allowing for instant access of the records with the hash as the key
 * **Note: This program benefits from newer hardware such as multithreadded processors and more available RAM. We conducted our tests on a desktop with a quad core Intel i5 4th generation processor with 8GB of double data rate (DDR) DDR3 RAM, a MacBook Pro with a dual core Intel i5 chip and 16GB of DDR3 RAM, and a AMD Ryzen 2700x with 4 cores, 8 CPU threads, and 12GB of DDR4 RAM**
-* **`Joke: Hardware Specifications:`**
+* **`(JOKE) Hardware Specifications:`**
 
 | Hardware | Minimum | Optimal |
 |:----------:|:---------:|:---------:|
