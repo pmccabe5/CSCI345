@@ -185,7 +185,8 @@ This method continues from the previous method for rule four
 and generates hashes up to length seven for rule four, 
 without any of the special characters from rule two.
 The method also lets the user see the current status of the
-list generation.
+list generation. This method also prints out updates for the user
+in order to see where the program is currently.
 '''
 
 def ruleFourLength6andLength7Start0():
@@ -422,7 +423,13 @@ def readInPasswords():
        passwordHashes.append(password)
     waitUntilDoneBuilding[14] = False
     print(colored('DONE: All password hashes have been read into an array', 'blue'))
-            
+
+'''
+Main method is designed to initiate all the threads for the program as well as read in the passwords from 
+the specified hash file in the README. The other functionality of the main method is to compare the hashes
+that have been loaded into the program to the hashes stored in the hashtables.
+'''   
+
 def main():
     print(colored('The program will begin by creating all the threads to build the hash table rule sets.', 'yellow'))
 
